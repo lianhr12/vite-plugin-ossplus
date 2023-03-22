@@ -184,8 +184,8 @@ enum ProviderType {
 interface IFileInfo {
   name: string;
   path: string;
-  content: string;
-  $retryTime: number | Buffer;
+  content: string | Buffer;
+  $retryTime?: number;
 }
 
 export class ViteOSSPlusPluginCore {
@@ -550,7 +550,6 @@ export class ViteOSSPlusPluginCore {
 export default function ViteOSSPlusPlugin(
   options: ViteOSSPlusPluginOptions
 ): Plugin {
-  let baseConfig: any;
   let buildConfig: any;
 
   const client = new ViteOSSPlusPluginCore(options);
@@ -560,7 +559,6 @@ export default function ViteOSSPlusPlugin(
     enforce: 'post',
     apply: 'build',
     configResolved(config) {
-      baseConfig = config.base;
       buildConfig = config.build;
     },
     async closeBundle() {
@@ -569,7 +567,6 @@ export default function ViteOSSPlusPlugin(
       );
       // 获取所有文件信息
       const files = await glob.sync(`${outDirPath}/**/*`, {
-        strict: true,
         nodir: true,
         dot: true,
       });
