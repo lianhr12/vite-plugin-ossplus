@@ -33,7 +33,7 @@ export default defineConfig({
   base: process.env.NODE_ENV === 'production' ? getPublicPath() : '/', // 资源替换的CDN域名及路径前缀
   plugins: [
     ...,
-    ViteOSSPlusPlugin({
+    vitePluginOSSPlus({
       provider: {
         aliOSS: {
           accessKeyId: 'xxx', // 在阿里 OSS 控制台获取
